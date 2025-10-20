@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 ### Packages Used
 
 ```{r packages}
-
+library(tidyverse)
 ```
 
 
@@ -37,6 +37,7 @@ Go to the [description](https://stat-jet-asu.github.io/Datasets/InstructorDescri
 
 ```{r readdata}
 dataURL <- "https://aokine.github.io/Data/NFLplayers2016.csv"
+NFL_Players<-read_csv(dataURL)
 ```
 
 
@@ -45,7 +46,7 @@ dataURL <- "https://aokine.github.io/Data/NFLplayers2016.csv"
 Use `glimpse()` to explore the structure of the NFL dataset.
 
 ```{r glimpsedata}
-
+glimpse(NFL_Players)
 ```
 
 
