@@ -57,7 +57,8 @@ Body mass index (BMI) is a measure of body fat based on height and weight. The f
 We want the BMI score for each player. Calculate and add a `BMI` variable to the `NFL` dataset.
 
 ```{r BMIcalculation}
-
+NFL_Players %>%
+  mutate(BMI = (Weight / 2.2046226218) / (((Height * 2.54) / 100) ** 2))
 ```
 
 
