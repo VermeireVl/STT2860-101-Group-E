@@ -1,7 +1,7 @@
 ---
 title: "Project 02: Group Coding & Analysis"
 subtitle: "STT 2860 Intro to Data Management & Visualization" 
-author: "PUT EVERYONE'S NAMES HERE"
+author: "Viktor Vermeire, PUT EVERYONE'S NAMES HERE"
 date: "`r format(Sys.time(), '%A, %B %d, %Y @ %I:%M %p')`"
 output: 
   html_document: 
@@ -26,6 +26,7 @@ knitr::opts_chunk$set(
 
 ```{r packages}
 library(tidyverse)
+library(skimr)
 ```
 
 
@@ -57,7 +58,7 @@ Body mass index (BMI) is a measure of body fat based on height and weight. The f
 We want the BMI score for each player. Calculate and add a `BMI` variable to the `NFL` dataset.
 
 ```{r BMIcalculation}
-NFL_Players %>%
+NFL_Players = NFL_Players %>%
   mutate(BMI = (Weight / 2.2046226218) / (((Height * 2.54) / 100) ** 2))
 ```
 
@@ -88,7 +89,7 @@ NFL_Players$Playtime = factor(
 Use `skim()` to explore the new structure of the NFL dataset with the added/reformatted variables.
 
 ```{r skimdata}
-
+skim(NFL_Players)
 ```
 
 
