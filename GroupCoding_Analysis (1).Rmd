@@ -67,13 +67,19 @@ NFL_Players %>%
 Use the `count()` or `distinct()` function to discover the names of all the categories included in the variable `Playtime`. 
 
 ```{r playtimecats}
-
+NFL_Players %>%
+  distinct(Playtime)
 ```
 
 The default order for categories in `R` is alphanumeric order. However, the categories of `Playtime` are an ordered set representing intervals of time and they are more meaningful if they are displayed in time order. Convert the categorical variable `Playtime` into a factor variable. Make sure all of the categories are organized in the correct time order (i.e., `Rookie` should be the first category). Use the `labels =` option within `factor()` so the categories that contain `Yrs` will display `Years` (i.e., 1-4 Years).
 
 ```{r factorconvert}
-
+NFL_Players$Playtime = factor(
+  NFL_Players$Playtime,
+  levels = c("Rookie", "1-4 Yrs", "5-8 Yrs", "9-12 Yrs", "13+ Yrs"),
+  labels = c("Rookie", "1-4 Years", "5-8 Years", "9-12 Years", "13+ Years"),
+  ordered = TRUE
+)
 ```
 
 
