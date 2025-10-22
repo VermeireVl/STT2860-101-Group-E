@@ -1,7 +1,7 @@
 ---
 title: "Project 02: Group Coding & Analysis"
 subtitle: "STT 2860 Intro to Data Management & Visualization" 
-author: "Viktor Vermeire, Ayden Matocha, "
+author: "Viktor Vermeire, Ayden Matocha, Nolan Boucher, Ethan Carter"
 date: "`r format(Sys.time(), '%A, %B %d, %Y @ %I:%M %p')`"
 output: 
   html_document: 
@@ -28,6 +28,7 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(skimr)
 library(ggplot2)
+library(ggbeeswarm)
 ```
 
 
@@ -35,7 +36,7 @@ library(ggplot2)
 
 #### Load the Dataset
 
-Go to the [description](https://stat-jet-asu.github.io/Datasets/InstructorDescriptions/NFLplayers2016.html) NFL Players 2016 Dataset and read the brief summary and variable definitions. Use the URL below to read the data into `R`. Save the dataset as an object named `NFL`.
+Go to the [description](https://stat-jet-asu.github.io/Datasets/InstructorDescriptions/NFL2016.html) NFL Players 2016 Dataset and read the brief summary and variable definitions. Use the URL below to read the data into `R`. Save the dataset as an object named `NFL`.
 
 ```{r readdata}
 dataURL <- "https://aokine.github.io/Data/NFLplayers2016.csv"
@@ -164,9 +165,6 @@ What does the distribution of BMI scores look like for NFL players in 2016? Are 
 * Use theme `minimal()` to reduce the clutter in the frame. Optionally, make other `theme()` changes to enhance your plot.
 
 ```{r BMIdensity}
-# Load necessary library
-library(ggplot2)
-
 # ---- Player BMI Density ----
 ggplot(NFL, aes(x = BMI)) +
   
@@ -258,7 +256,7 @@ ggplot(NFL, aes(x = BMI, fill = PositionGrp)) +
 
 Many people suggest that BMI is a poor measure for athletes, who often have a high body weight due to muscle mass versus fat. What do your plots suggest about this? Discuss.
 
-**ANSWER:** (erase this text and put your answer here) 
+**ANSWER:** I would agree because since they have a higher muscle mass it raises their BMI and they could be considered unhealthy despite being great athletes. BFP would be a much better measurement.
 
 
 ### Age & Playtime Visualizations
@@ -275,7 +273,7 @@ Many people suggest that BMI is a poor measure for athletes, who often have a hi
 * Your final plot should *not* have a legend on it.
 
 ```{r playtimeboxplot}
-ggplot(nflplayers, aes(x = Playtime)) + geom_bar(fill = "#0073C2FF", color = "white") + scale_y_continuous(breaks = seq(0,max(table(nflplayers$Playtime)) + 100, by = 100)) + labs(title = "Distribution of NFL Player Playtime", subtitle = "Playtime levels across all recorded players",
+ggplot(NFL, aes(x = Playtime)) + geom_bar(fill = "#0073C2FF", color = "white") + scale_y_continuous(breaks = seq(0,max(table(NFL$Playtime)) + 100, by = 100)) + labs(title = "Distribution of NFL Player Playtime", subtitle = "Playtime levels across all recorded players",
 x = "Playtime Category", y = "Number of Players") + theme_light(base_size = 14) + theme(legend.position = "none")
 ```
 
@@ -295,7 +293,7 @@ x = "Playtime Category", y = "Number of Players") + theme_light(base_size = 14) 
 * Add any other formatting you feel will enhance meaning.
 
 ```{r ageviolins}
-ggplot(nflplayers, aes(x = Age, y = Side)) + geom_violin(fill = "#B3CDE3", color = "gray40", alpha = 0.8) + geom_boxplot(width = 0.15, fill = "#005B96", color = "white", outlier.size = 2.5) + labs( title = "Distribution of NFL Player Ages by Field Side", subtitle = "Comparison of player ages across offense, defense, and special teams", x = "Age (years)", y = "Side of Play") + theme_light(base_size = 14)
+ggplot(NFL, aes(x = Age, y = Side)) + geom_violin(fill = "#B3CDE3", color = "gray40", alpha = 0.8) + geom_boxplot(width = 0.15, fill = "#005B96", color = "red", outlier.size = 2.5) + labs( title = "Distribution of NFL Player Ages by Field Side", subtitle = "Comparison of player ages across offense, defense, and special teams", x = "Age (years)", y = "Side of Play") + theme_light(base_size = 14)
 ```
 
 
@@ -314,14 +312,12 @@ ggplot(nflplayers, aes(x = Age, y = Side)) + geom_violin(fill = "#B3CDE3", color
 * Add any other formatting you feel will enhance meaning.
 
 ```{r yearsbeeswarm}
-library(ggbeeswarm)
-
-ggplot(nflplayers, aes(x = Side, y = Years, fill = Playtime)) + geom_beeswarm(cex = 1.2, size = 3, shape = 21, color = "black") + scale_fill_viridis_d(option = "plasma") + labs( title = "NFL Player Career Length by Field Side", subtitle = "Each point represents one player, color-coded by playtime level", x = "Side of Play", y = "Career Length (Years)", fill = "Playtime Level") + theme_light(base_size = 14) + theme(legend.position = "bottom")
+ggplot(NFL, aes(x = Side, y = Years, fill = Playtime)) + geom_beeswarm(cex = 1.2, size = 3, shape = 21, color = "black") + scale_fill_viridis_d(option = "plasma") + labs( title = "NFL Player Career Length by Field Side", subtitle = "Each point represents one player, color-coded by playtime level", x = "Side of Play", y = "Career Length (Years)", fill = "Playtime Level") + theme_light(base_size = 14) + theme(legend.position = "bottom")
 ``` 
 
 Assuming these data are representative, does it seem as if most NFL players can look forward to having a long career in the sport? How do your three plots above inform you about that question? What do they *not* tell you? Discuss.
 
-**The plots show that most NFL players have short careers with most of them under 10 years. This includes active players in their mid-20s to early 30s. While playtime and age vary across both sides of the ball, the majority of players see shorter playtime and careers. These plots however, don't do a good job explaining why careers are short. This could be due to injuries or the nature of football. To improve on this they could show how career length changes over time due to injuries.** 
+**ANSWER:** The plots show that most NFL players have short careers with most of them under 10 years. This includes active players in their mid-20s to early 30s. While playtime and age vary across both sides of the ball, the majority of players see shorter playtime and careers. These plots however, don't do a good job explaining why careers are short. This could be due to injuries or the nature of football. To improve on this they could show how career length changes over time due to injuries.** 
 
 
 ***
