@@ -39,7 +39,7 @@ Go to the [description](https://stat-jet-asu.github.io/Datasets/InstructorDescri
 
 ```{r readdata}
 dataURL <- "https://aokine.github.io/Data/NFLplayers2016.csv"
-NFL_Players<-read_csv(dataURL)
+NFL<-read_csv(dataURL)
 ```
 
 
@@ -48,7 +48,7 @@ NFL_Players<-read_csv(dataURL)
 Use `glimpse()` to explore the structure of the NFL dataset.
 
 ```{r glimpsedata}
-glimpse(NFL_Players)
+glimpse(NFL)
 ```
 
 
@@ -59,7 +59,7 @@ Body mass index (BMI) is a measure of body fat based on height and weight. The f
 We want the BMI score for each player. Calculate and add a `BMI` variable to the `NFL` dataset.
 
 ```{r BMIcalculation}
-NFL_Players = NFL_Players %>%
+NFL = NFL %>%
   mutate(BMI = (Weight / 2.2046226218) / (((Height * 2.54) / 100) ** 2))
 ```
 
@@ -69,15 +69,15 @@ NFL_Players = NFL_Players %>%
 Use the `count()` or `distinct()` function to discover the names of all the categories included in the variable `Playtime`. 
 
 ```{r playtimecats}
-NFL_Players %>%
+NFL %>%
   distinct(Playtime)
 ```
 
 The default order for categories in `R` is alphanumeric order. However, the categories of `Playtime` are an ordered set representing intervals of time and they are more meaningful if they are displayed in time order. Convert the categorical variable `Playtime` into a factor variable. Make sure all of the categories are organized in the correct time order (i.e., `Rookie` should be the first category). Use the `labels =` option within `factor()` so the categories that contain `Yrs` will display `Years` (i.e., 1-4 Years).
 
 ```{r factorconvert}
-NFL_Players$Playtime = factor(
-  NFL_Players$Playtime,
+NFL$Playtime = factor(
+  NFL$Playtime,
   levels = c("Rookie", "1-4 Yrs", "5-8 Yrs", "9-12 Yrs", "13+ Yrs"),
   labels = c("Rookie", "1-4 Years", "5-8 Years", "9-12 Years", "13+ Years"),
   ordered = TRUE
@@ -90,7 +90,7 @@ NFL_Players$Playtime = factor(
 Use `skim()` to explore the new structure of the NFL dataset with the added/reformatted variables.
 
 ```{r skimdata}
-skim(NFL_Players)
+skim(NFL)
 ```
 
 
@@ -123,7 +123,7 @@ How did NFL players in 2016 compare to all men in the U.S.? Create a histogram o
 * Use theme `minimal()` to reduce the clutter in the frame. Optionally, make other `theme()` changes to enhance your plot.
 
 ```{r heighthistogram}
-ggplot(NFL_Players, aes(x = Height)) + geom_histogram(breaks = seq(60.5, 85.5, by = 1), color = "black", fill = "lightblue") + annotate("rect", xmin = 64, xmax = 73.5, ymin = 0, ymax = 400, alpha = 0.5) + annotate("text", x = 67.5, y = 410, label = "Middle 90% of U.S. Men") + annotate("rect", xmin = 67, xmax = 71, ymin = 0, ymax = 400, alpha = 0.5, fill = "blue") + annotate("text", x = (67.0 + 71) / 2, y = -10, label = "Middle 50% of U.S. Men", color = "blue") +  geom_vline(xintercept = 69.2, linetype = "dashed", color = "red") + annotate("text", x = 67, y = 200, label = "Median: 69.2", color = "red") + scale_x_continuous(breaks = seq(60, 86, 1)) + scale_y_continuous(breaks = seq(50, 400, 50)) + labs(title = "NFL Player Heights Compared to Average US Male Height", x = "Height (in)", y = "Number of Players") + theme_minimal()
+ggplot(NFL, aes(x = Height)) + geom_histogram(breaks = seq(60.5, 85.5, by = 1), color = "black", fill = "lightblue") + annotate("rect", xmin = 64, xmax = 73.5, ymin = 0, ymax = 400, alpha = 0.5) + annotate("text", x = 67.5, y = 410, label = "Middle 90% of U.S. Men") + annotate("rect", xmin = 67, xmax = 71, ymin = 0, ymax = 400, alpha = 0.5, fill = "blue") + annotate("text", x = (67.0 + 71) / 2, y = -10, label = "Middle 50% of U.S. Men", color = "blue") +  geom_vline(xintercept = 69.2, linetype = "dashed", color = "red") + annotate("text", x = 67, y = 200, label = "Median: 69.2", color = "red") + scale_x_continuous(breaks = seq(60, 86, 1)) + scale_y_continuous(breaks = seq(50, 400, 50)) + labs(title = "NFL Player Heights Compared to Average US Male Height", x = "Height (in)", y = "Number of Players") + theme_minimal()
 ```
 
 
@@ -202,7 +202,7 @@ ggplot(NFL, aes(x = BMI)) +
     subtitle = "BMI Categories Based on CDC & Cleveland Clinic Standards",
     x = "Body Mass Index (BMI)",
     y = "Density",
-    caption = "Data: nfl2016 dataset"
+    caption = "Data: NFL dataset"
   ) +
 
   # Minimal theme 
@@ -230,7 +230,7 @@ ggplot(NFL, aes(x = BMI)) +
 
 ```{r BMIfaceted}
 # ---- Faceted BMI Densities by Position Group ----
-ggplot(nfl2016, aes(x = BMI, fill = PositionGrp)) +
+ggplot(NFL, aes(x = BMI, fill = PositionGrp)) +
   geom_density(alpha = 0.7) +
 
   # Facet by position group, stacked vertically
@@ -250,7 +250,7 @@ ggplot(nfl2016, aes(x = BMI, fill = PositionGrp)) +
   theme_minimal(base_size = 13) +
   theme(
     legend.position = "none",
-    strip.text = element_text(size = 12, face = "bold", angle = 0),
+    strip.text = element_text(size = 12, face = "bold", angle = 0))
 ```
 
 
