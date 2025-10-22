@@ -258,7 +258,7 @@ ggplot(NFL, aes(x = BMI, fill = PositionGrp)) +
 
 Many people suggest that BMI is a poor measure for athletes, who often have a high body weight due to muscle mass versus fat. What do your plots suggest about this? Discuss.
 
-**ANSWER:** (erase this text and put your answer here) 
+**ANSWER:** (I would agree because since they have higher muscle mass it raises their BMI and they could be considered unhealthy although they are great athletes. BFP would be a much better measurement) 
 
 
 ### Age & Playtime Visualizations
