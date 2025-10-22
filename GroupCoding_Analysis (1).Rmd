@@ -27,6 +27,7 @@ knitr::opts_chunk$set(
 ```{r packages}
 library(tidyverse)
 library(skimr)
+library(ggplot2)
 ```
 
 
@@ -122,7 +123,7 @@ How did NFL players in 2016 compare to all men in the U.S.? Create a histogram o
 * Use theme `minimal()` to reduce the clutter in the frame. Optionally, make other `theme()` changes to enhance your plot.
 
 ```{r heighthistogram}
-
+ggplot(NFL_Players, aes(x = Height)) + geom_histogram(breaks = seq(60.5, 85.5, by = 1), color = "black", fill = "lightblue") + annotate("rect", xmin = 64, xmax = 73.5, ymin = 0, ymax = 400, alpha = 0.5) + annotate("text", x = 67.5, y = 410, label = "Middle 90% of U.S. Men") + annotate("rect", xmin = 67, xmax = 71, ymin = 0, ymax = 400, alpha = 0.5, fill = "blue") + annotate("text", x = (67.0 + 71) / 2, y = -10, label = "Middle 50% of U.S. Men", color = "blue") +  geom_vline(xintercept = 69.2, linetype = "dashed", color = "red") + annotate("text", x = 67, y = 200, label = "Median: 69.2", color = "red") + scale_x_continuous(breaks = seq(60, 86, 1)) + scale_y_continuous(breaks = seq(50, 400, 50)) + labs(title = "NFL Player Heights Compared to Average US Male Height", x = "Height (in)", y = "Number of Players") + theme_minimal()
 ```
 
 
@@ -130,7 +131,7 @@ How did NFL players in 2016 compare to all men in the U.S.? Create a histogram o
 
 Based on your plot, what can you say about how the height of NFL players in 2016 compared to all men in the U.S.? What other plots or data analyses might help support your exploration of this question? Discuss.
 
-**ANSWER:** (erase this text and put your answer here) 
+**ANSWER:** Based on this plot, it is very clear that NFL players are a lot taller than all men in the US. The 90th percentile for US men looks like the median height for NFL players, while the median height for US men is on the lower end of NFL players. Another plot we could use would be a boxplot, as it clearly shows the median and percentiles. We can put two boxplots of US men and NFL players side by side and compare how they look.
 
 
 ### BMI Score Visualization
